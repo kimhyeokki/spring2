@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mt-5 mb-5">JOIN</h2>
+            <form action="" th:action="@{/member/join}" method="post">
+                <div class="mb-3">
+                    <label for="userId" class="form-label">userId</label>
+                    <input type="text" class="form-control" id="userId" placeholder="title" name="userId">
+                    <div class="error" >
+                        오류 메세지...</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="userName" class="form-label">nickName</label>
+                    <input type="text" class="form-control" id="userName" placeholder="name" name="nickName"
+                    >
+                    <div class="error" >
+                        오류 메세지...</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">email</label>
+                    <input type="text" class="form-control" id="email" placeholder="email"
+                           name="email">
+                    <div class="error" >
+                        오류 메세지...</div>
+                </div>
+                <div class="mb-3">
+                    <label for="age" class="form-label">password</label>
+                    <input type="text" class="form-control" id="age" placeholder="age"
+                           name="age">
+                    <div class="error" >오류 메세지...</div>
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <button class="btn btn-primary" id="btnJoinConfirm">confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
