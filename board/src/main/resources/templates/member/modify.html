@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://wwwthymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>MY PAGE</h2>
+        <form action="/member/modify" method="post" >
+        <table class="table">
+            <tbody>
+            <tr>
+                <th scope="row">아이디</th>
+                <td th:text="${#authentication.principal.loggedMember.id}"></td>
+            </tr>
+            <tr>
+                <th scope="row">이름</th>
+                <td><input type="text" name="name" th:value="${#authentication.principal.loggedMember.name}"></td>
+            </tr>
+            <tr>
+                <th scope="row">이메일</th>
+                <td><input type="text" name="email" th:value="${#authentication.principal.loggedMember.email}"></td>
+            </tr>
+            <tr>
+                <th scope="row">비밀번호</th>
+                <td><input type="password" name="password" ></td>
+            </tr>
+            </tbody>
+        </table>
+            <div th:if="${error}">
+                <p class="alert alert-danger" th:text="${exception}"></p>
+            </div>
+            <input type="hidden" name="id" th:value="${#authentication.principal.loggedMember.id}">
+        <div>
+            <button class="btn btn-danger" >확인</button>
+            <button class="btn btn-danger" id="btnModify">ajax확인</button>
+        </div>
+        </form>
+    </div>
+    <script>
+        $("#btnModify").on("click",function(e){
+            const sendDate = $("form").serialize();
+            $.ajax({
+                url:"/member/modify",
+                method:"PUT",
+                /*data:{
+                    id:$("input[name='id']").val(),
+                    password:$("input[name='password']").val(),
+                    name:$("input[name='name']").val(),
+                    email:$("input[name='email']").val()
+                },*/
+                data:sendDate,
+                success:function(data){
+                    if(data.isState==="ok"){
+                        location.href="/";
+                    }else{
+                        alert("패스워드 확인해주세요")
+                    }
+                    console.log(data);
+                }
+            });
+            return false;
+        })
+    </script>
+</div>
+</html>

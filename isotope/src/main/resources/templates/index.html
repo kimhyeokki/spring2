@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="/js/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+</head>
+<body>
+<header id="header">
+    <h1 id="logo">안녕</h1>
+    <th:block sec:authorize="isAuthenticated()">
+    <h1 th:text="${#authentication.getPrincipal.loggedMember.name}">갤러리</h1>>
+    <h1 th:text="${#authentication.getPrincipal.loggedMember.email}">갤러리</h1>>
+    </th:block>
+    <th:block sec:authorize="isAuthenticated()">
+       <nav>
+           <ul>
+               <li><a href="" th:text="${#authentication.getPrincipal.loggedMember.name}"></a></li>
+               <li><a href="">로그아웃</a></li>
+               <li><a href="" th:href="@{/isotope/main}">전시회</a></li>
+           </ul>
+       </nav>
+    </th:block>
+    <th:block sec:authorize="!isAuthenticated()">
+        <nav>
+            <ul>
+                <li><a href="" th:href="@{/member/join}">회원가입</a></li>
+                <li><a href="" th:href="@{/member/login}">로그인</a></li>
+            </ul>
+        </nav>
+    </th:block>
+
+</header>
+    <main id="main">
+        <nav id="filter">
+            <ul>
+                <li class="on" data-filter="item">All</li>
+                <th:block th:each="item :${categoryList}">
+                <li th:attr="data-filter=${item.desc}"  th:text="${item}">PAINT</li>
+
+                    <!--data-filter="paint"-->
+                </th:block>
+                <!--ordinal(): 상수 숫자로 사용할 때
+                    name() : 문자로 사용할때
+                -->
+                <!--<li data-filter="sketch">SKETCH</li>
+                <li data-filter="paint">PAINT</li>
+                <li data-filter="photo">PHOTO</li>-->
+            </ul>
+        </nav>
+        <div>
+            <ul class="itemList">
+                <th:block th:each="item, status :${isotopeList}">
+                <li class="item" th:classappend="${item.category}">
+                    <a href="" th:href="@{|/upload/${item.renamed}|}" data-fancybox="gallery"  data-caption="Single image"
+                    th:attr="data-caption=${item.title}, data-fancybox=${item.category}">
+                    <div class="img">
+
+                        <img src="" th:src="@{|/upload/${item.renamed}|}">
+                    </div>
+                    <div class="info">
+                        <h2 th:text="${item.title}" class="title">title</h2>
+                        <p class="desc" th:text="${item.description}">description</p>
+                        <p class="point" th:text="${item.point}">point</p>
+                    </div>
+                    </a>
+                </li>
+                </th:block>
+            </ul>
+        </div>
+    </main>
+    <script>
+        $("body").imagesLoaded( function() {
+           let grid = $(".itemList").isotope({
+              // options
+              itemSelector: ".item",
+              layoutMode: "masonry",
+              getSortDate:{
+                point:".point",
+                title:".title"
+              },
+              sortBy:["point","title"],
+              sortAscending: false
+          });
+
+          $("#filter ul li").on("click",function(){
+              console.log("click");
+              $(this).siblings().removeClass("on");
+              $(this).addClass("on");
+              const _filter = "."+$(this).data("filter");
+              grid.isotope({ filter: _filter });
+          })
+      })
+
+        Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+        Carousel: {
+            transition: "slide",
+            }
+        });
+    </script>
+</body>
+</html>

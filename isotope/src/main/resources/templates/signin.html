@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+  <!--  <link rel="stylesheet" href="/css/layout.css">-->
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5 mb-5">insert</h2>
+    <form action="" th:action="@{/member/join}"  th:object="${memberJoin}" method="post" enctype="multipart/form-data">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <th:block  th:each="item :${#fields.globalErrors()}">
+        <p class="fieldError" th:text="${item}"></p>
+        </th:block >
+    </div>
+    <div class="mb-3">
+        <label for="id" class="form-label">아이디</label>
+        <input type="text" class="form-control" id="id" placeholder="id" th:field="*{id}">
+        <div class="error" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">
+
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">비밀번호</label>
+        <input type="text" class="form-control" id="password" placeholder="password" th:field="*{password}">
+        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+
+        </div>
+    </div>
+      <!--  <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="text" class="form-control" id="password02" placeholder="password02" th:field="*{password}">
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+
+            </div>
+        </div>-->
+    <div class="mb-3">
+        <label for="name" class="form-label">이름</label>
+        <input type="text" class="form-control" id="name" placeholder="name" th:field="*{name}">
+        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">이메일</label>
+        <input type="text" class="form-control" id="email" placeholder="email" th:field="*{email}">
+        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+
+        </div>
+    </div>
+        <div class="mb-3">
+            <label for="userrole" class="form-label">유저롤</label>
+            <input type="text" class="form-control" id="userrole" placeholder="userrole" th:field="*{name}">
+        </div>
+        <div class="mb-3">
+            <label for="file" class="form-label">file</label>
+            <input class="form-control" type="file" id="file" name="file" th:field="*{profile}">
+            <div class="error" th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}" >
+
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">나이</label>
+            <input type="text" class="form-control" id="age" placeholder="age" th:field="*{age}">
+            <div class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">
+
+            </div>
+        </div>
+    <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-primary">확인</button>
+    </div>
+    </form>
+</div>
+</body>
+</html>

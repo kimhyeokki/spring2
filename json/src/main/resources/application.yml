@@ -1,0 +1,14 @@
+server:
+  port: 8090
+
+Spring :
+  devtools:
+    livereload:
+      enabled : true
+    restart:
+      enabled : true
+
+  output:
+    ansi:
+      enabled : always
+

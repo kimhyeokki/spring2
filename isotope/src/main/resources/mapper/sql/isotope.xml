@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.khk11.isotope.dao.IsotopeDao">
+
+    <insert id="insertIsotope" parameterType="IsotopeDto">
+        insert into isotope values(seq_isotope.nextval,#{title},#{description},#{point},#{category},
+        #{original},#{renamed},sysdate)
+    </insert>
+    <select id="getAllList" resultType="IsotopeDto">
+        select * from isotope
+    </select>
+</mapper>

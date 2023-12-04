@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.khk11.isotope.dao.MemberJoinDao">
+    <insert id="insertMember" parameterType="MemberJoin">
+        insert into memberjoin values(seq_memberjoin.nextval,#{id},#{password},#{name},#{email},'ROLE_MEMBER',
+        #{profiles},#{age})
+    </insert>
+    <select id="loginMember" parameterType="String" resultType="MemberJoin">
+        select * from memberjoin where id = #{username}
+    </select>
+</mapper>

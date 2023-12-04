@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <main class="form-signin w-100 m-auto mt-5">
+        <form action="/member/loginProcess" method="post"  th:action="@{/member/loginProcess}" th:object="${loginDto}">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="id" placeholder="아이디를 입력" name="id">  <!--username을 맞쳐야 함-->
+                <label for="id">아이디</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="Password" placeholder="Password" name="password">
+                <label for="Password">비밀번호</label>
+            </div>
+
+            <div class="form-check text-start my-3">
+                <input class="form-check-input" type="checkbox"  id="flexCheckDefault" name="saveMe">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Remember me
+                </label>
+            </div>
+            <div th:if="${error}">
+                <p class="alert alert-danger" th:text="${exception}"></p>
+            </div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+            <a class="btn btn-primary w-100 py-2" href="/member/findPassword">비밀번호 찾기</a>
+            <p class="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
+        </form>
+    </main>
+    <script>
+       /* const tl = gsap.timeline();
+        tl
+        .from("header img",{scale:0,ease:"elastic"})
+        .from("header .nav li",{x:50,opacity:0,stagger:0.1})
+        .from(".main h2", {x:50,opacity:0})
+        .from("form",{opacity:0,y:100,ease:"back",delay:0.5})*/
+    </script>
+</div>

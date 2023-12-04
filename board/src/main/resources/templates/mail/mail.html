@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>MAIL</h2>
+        <form method="post" action="/mail/send">
+            <div class="mb-3">
+                <label for="receiver" class="form-label">받는사람</label>
+                <input type="text" name="receiver" class="form-control" placeholder="받는 사람 이메일 써주세요" id="receiver" >
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" class="form-control" placeholder="제목" id="title" name="title">
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+            </div>
+            <div class="mt-5">
+                <button class="btn btn-primary" id="btnSubmit">메일 전송</button>
+            </div>
+        </form>
+    </div>
+</div>
+</html>

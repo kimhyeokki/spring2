@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://wwwthymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>MY PAGE</h2>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th scope="row">아이디</th>
+                <td th:text="${#authentication.principal.loggedMember.id}">Mark</td>
+            </tr>
+            <tr>
+                <th scope="row">이름</th>
+                <td th:text="${#authentication.principal.loggedMember.name}">Mark</td>
+            </tr>
+            <tr>
+                <th scope="row">이메일</th>
+                <td th:text="${#authentication.principal.loggedMember.email}">Mark</td>
+            </tr>
+            <tr>
+                <th scope="row">날짜</th>
+                <td th:text="${#authentication.principal.loggedMember.regdate}">Mark</td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <a class="btn btn-primary" th:href="@{/member/modify}">회원정보 수정</a>
+            <a class="btn btn-danger" th:href="@{/member/delete}">회원 탈퇴</a>
+        </div>
+    </div>
+
+</div>
+</html>
