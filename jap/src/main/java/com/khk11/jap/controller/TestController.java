@@ -70,7 +70,6 @@ public class TestController {
         model.addAttribute("end",end);
         model.addAttribute("boardList",boardList);
         model.addAttribute("pageNation",pageNation);
-        model.addAttribute("sdsd","sdssd");
         return "/list";
     }
 
