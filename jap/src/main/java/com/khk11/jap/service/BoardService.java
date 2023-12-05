@@ -56,13 +56,18 @@ public class BoardService {
         return boardList;
     }
 
-    public BoardDto getBoard(int id) {
+    public Board02 getBoard(int id) {
         Optional<Board02> board = boardRepository.findById(id); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확인후
                                                                 // .get()을 통해 가져올 수 있다.
         if(board.isPresent()){
-          return BoardDto.fromEntity(board.get());  //entity로 반환함
+          return board.get();  //entity로 반환함
         }
           throw new DataNotFoundException("찾는 거 없습니다.");
           //  return null;
+    }
+    public Page<Board02> getSearchBoard(String keyword, int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        Page<Board02> boardList = boardRepository.findBySubject(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확인후
+        return boardList;
     }
 }

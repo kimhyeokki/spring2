@@ -11,10 +11,16 @@
 <body>
 <div class="container">
     <table class="table">
+        <colgroup>
+            <col style="width:100px">
+            <col style="width:100px">
+            <col style="width:100px">
+        </colgroup>
         <thead>
         <tr>
             <th scope="col">번호</th>
             <th scope="col">SUBJECT</th>
+            <th scope="col">WRITER</th>
             <th scope="col">DATE</th>
         </tr>
         </thead>
@@ -23,6 +29,7 @@
             <tr>
                 <th scope="row">1</th>
                 <td ><a href="" th:href="@{/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></td>
+                <td ><span   th:text="${item.writer.nickName}">제목이 들어가겠죠....</span></td>
                 <td th:text="${#temporals.format(item.createDate,'YYYY-MM/dd')}"></td>
             </tr>
         </th:block>
@@ -48,6 +55,9 @@
             </li>
         </ul>
     </nav>
+    <div class="">
+        <a href="/insert" class="btn btn-primary">글쓰기</a>
+    </div>
 </div>
 </body>
 </html>

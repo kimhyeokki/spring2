@@ -33,4 +33,8 @@ public class Comment02 {
     @ManyToOne
     @JoinColumn(name = "boardId")
     private Board02 board02;
+
+    @ManyToOne
+    //@JoinColumn(name = "userId")
+    private Member02 writer;
 }

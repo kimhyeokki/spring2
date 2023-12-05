@@ -17,6 +17,16 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
+    @GetMapping("/login")
+    public String login(MemberDto memberDto, Model model){
+        model.addAttribute("memberDto",new MemberDto());
+        return "/member/login";
+    }
+   /* @PostMapping("/login")
+    public String loginProcess(){
+        memberService.
+        return "/member/login";
+    }*/
     @GetMapping("/join")
     public String join(){
         return "/member/join";

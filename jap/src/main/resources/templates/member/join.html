@@ -12,31 +12,28 @@
             <form action="" th:action="@{/member/join}" method="post">
                 <div class="mb-3">
                     <label for="userId" class="form-label">userId</label>
-                    <input type="text" class="form-control" id="userId" placeholder="title" name="userId">
-                    <div class="error" >
-                        오류 메세지...</div>
+                    <input type="text" class="form-control" id="userId" placeholder="userId" name="userId">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">password</label>
+                    <input type="text" class="form-control" id="password" placeholder="password" name="password">
                 </div>
 
                 <div class="mb-3">
                     <label for="userName" class="form-label">nickName</label>
                     <input type="text" class="form-control" id="userName" placeholder="name" name="nickName"
                     >
-                    <div class="error" >
-                        오류 메세지...</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">email</label>
                     <input type="text" class="form-control" id="email" placeholder="email"
                            name="email">
-                    <div class="error" >
-                        오류 메세지...</div>
                 </div>
                 <div class="mb-3">
-                    <label for="age" class="form-label">password</label>
+                    <label for="age" class="form-label">age</label>
                     <input type="text" class="form-control" id="age" placeholder="age"
                            name="age">
-                    <div class="error" >오류 메세지...</div>
                 </div>
                 <div class="d-flex justify-content-center mt-5">
                     <button class="btn btn-primary" id="btnJoinConfirm">confirm</button>

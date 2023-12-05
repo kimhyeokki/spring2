@@ -5,6 +5,7 @@ import com.khk11.jap.entity.Member02;
 import com.khk11.jap.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,12 +17,15 @@ import java.util.Optional;
 @Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public MemberDto join(MemberDto memberDto){
         //MemberDto memberDto  Dto를 값들을 엔티티로 만들 수 잇다. 빌드를 통해
        // Member02 dbMember = Member02.builder(memberDto.getUserId()).build();
         Member02 dbJoinMember = Member02.builder()
                 .userId(memberDto.getUserId())
+                .password(bCryptPasswordEncoder.encode(memberDto.getPassword()))
+                .role("ROLE_USER")
                 .email(memberDto.getEmail())
                 .nickName(memberDto.getNickName())
                 .gender(memberDto.getGender())

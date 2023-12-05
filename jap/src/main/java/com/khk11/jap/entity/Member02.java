@@ -14,8 +14,14 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class Member02 {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
     @Column(length = 30,unique = true)
     private String userId;
+    @Column(length = 100,nullable = true)
+    private String password;
+    @Column(length = 20,nullable = true)
+    private String role;
     private String nickName;
     private String gender;
     private String email;

@@ -1,6 +1,7 @@
 package com.khk11.jap.controller;
 
 import com.khk11.jap.dto.BoardDto;
+import com.khk11.jap.dto.CustomUserDetails;
 import com.khk11.jap.entity.Board02;
 import com.khk11.jap.repository.BoardRepository;
 import com.khk11.jap.service.BoardService;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +43,16 @@ public class TestController {
         return "/insert";
     }
     @PostMapping("/insert")
-        public String insertProcess(@ModelAttribute BoardDto boardDto){
+        public String insertProcess(@ModelAttribute BoardDto boardDto,
+                                    @AuthenticationPrincipal CustomUserDetails customUserDetails){
         Board02 dbInsertBoard = Board02.builder()
+                .writer(customUserDetails.getLoggedMember()) // Member02를 가져옴
                 .subject(boardDto.getSubject())
                 .content(boardDto.getContent())
                 .createDate(LocalDateTime.now())
                 .build();
         boardService.insertBoard(dbInsertBoard);
-         return "redirect:/list";
+         return "redirect:/list02";
     }
 
     @GetMapping("/list")
@@ -73,13 +77,30 @@ public class TestController {
         return "/list";
     }
 
+    @GetMapping("/search")
+    public String pageSearchList(Model model,
+                                 @RequestParam  String keyword,
+                                 @RequestParam(value = "page",required = true,defaultValue = "0") int page){
+        Page<Board02> pageNation = boardService.getSearchBoard(keyword,page);
+
+        log.info("total==={}",pageNation.getTotalPages());
+        List<Board02> boardList = pageNation.getContent(); //getContent()를 통해 리스트로 나타남
+        int start = pageNationSize*(int)Math.floor((double) pageNation.getNumber() / pageNationSize) ;
+        int end = start+pageNationSize;
+        model.addAttribute("start",start);
+        model.addAttribute("end",end);
+        model.addAttribute("boardList",boardList);
+        model.addAttribute("pageNation",pageNation);
+        return "/list";
+    }
+
 
 
 
 
     @GetMapping("/view/{id}")
     private String view(@PathVariable int id, Model model){
-        BoardDto  board = boardService.getBoard(id);
+        Board02  board = boardService.getBoard(id);
         log.info("id==={}",id);
         log.info("commentList==={}",board.getCommentList().size());
         model.addAttribute("board",board);

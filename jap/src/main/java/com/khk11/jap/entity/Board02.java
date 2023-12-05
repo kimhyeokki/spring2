@@ -1,5 +1,6 @@
 package com.khk11.jap.entity;
 
+import com.khk11.jap.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,7 @@ public class Board02 {
     // int는 사용 못함
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)  //시퀀스 생성
-    @Column(name = "boardId") // 컬럼명도 이름을 바꿀 수 있다.
+  //  @Column(name = "boardId") // 컬럼명도 이름을 바꿀 수 있다.
     private Integer id;
 
  //   @Column(name = "mySubject")
@@ -30,4 +31,8 @@ public class Board02 {
 
     @OneToMany(mappedBy = "board02", cascade = CascadeType.REMOVE)
     private List<Comment02> commentList;
+
+    @ManyToOne
+    //@JoinColumn(name = "userId")
+    private Member02 writer;
 }
