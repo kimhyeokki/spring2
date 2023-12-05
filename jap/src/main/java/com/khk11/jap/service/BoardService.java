@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class BoardService {
         return boardList;
     }
     public Page<Board02> getAllPageBoard(int page) {
-       Pageable pageable = PageRequest.of(page,10);
+       Pageable pageable = PageRequest.of(page,10, Sort.by(Sort.Direction.ASC,"createDate"));
         Page<Board02> boardList = boardRepository.findAll(pageable);
         return boardList;
     }
@@ -65,9 +66,18 @@ public class BoardService {
           throw new DataNotFoundException("찾는 거 없습니다.");
           //  return null;
     }
-    public Page<Board02> getSearchBoard(String keyword, int page) {
+    public Page<Board02> getSearchBoard(String category,String keyword, int page) {
         Pageable pageable = PageRequest.of(page,10);
-        Page<Board02> boardList = boardRepository.findBySubject(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확인후
-        return boardList;
+        if (category.equals("subject")){
+        Page<Board02> boardList = boardRepository.findBySubject(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확인
+            return boardList;
+        } else if(category.equals("content")){
+            Page<Board02> boardList = boardRepository.findByContent(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확
+            return boardList;
+        }else if (category.equals("writer")){
+            Page<Board02> boardList = boardRepository.findByWriter(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확
+            return boardList;
+        }
+        throw new RuntimeException("검색 결과가 없습니다.");
     }
 }

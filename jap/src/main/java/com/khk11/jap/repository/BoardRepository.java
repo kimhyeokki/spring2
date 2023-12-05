@@ -29,6 +29,10 @@ public interface BoardRepository extends JpaRepository<Board02,Integer> { //클�
     //*은 못쓰기 때문에 이름을 부여해서 사용해야 한다.
     //매개변수를 쓰려면 변수라는 이름으로 : 을 붙여야 한다.
     Page<Board02> findBySubject(@Param("keyword") String keyword,Pageable pageable);
+    @Query("select b from Board02 b where b.content like %:keyword%")
+    Page<Board02> findByContent(@Param("keyword") String keyword,Pageable pageable);
+    @Query("select b from Board02 b where b.writer.nickName like %:keyword%")
+    Page<Board02> findByWriter(@Param("keyword") String keyword,Pageable pageable);
 
     @Query(value = "select * from Board02 b where b.subject like %:keyword%" , nativeQuery = true)
         //nativeQuery true를 쓰면 *를 쓸수 있다.

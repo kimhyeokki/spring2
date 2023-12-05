@@ -80,8 +80,9 @@ public class TestController {
     @GetMapping("/search")
     public String pageSearchList(Model model,
                                  @RequestParam  String keyword,
+                                 @RequestParam String category,
                                  @RequestParam(value = "page",required = true,defaultValue = "0") int page){
-        Page<Board02> pageNation = boardService.getSearchBoard(keyword,page);
+        Page<Board02> pageNation = boardService.getSearchBoard(category,keyword,page);
 
         log.info("total==={}",pageNation.getTotalPages());
         List<Board02> boardList = pageNation.getContent(); //getContent()를 통해 리스트로 나타남
