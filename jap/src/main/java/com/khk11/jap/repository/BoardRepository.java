@@ -25,6 +25,11 @@ public interface BoardRepository extends JpaRepository<Board02,Integer> { //클�
     @Override
     Page<Board02> findAll(Pageable pageable);
 
+    @Query(value = "select b from Board02 b where b.writer.nickName like %:keyword% or " +
+            "b.subject like %:keyword% or " +
+            "b.content like %:keyword%")
+    Page<Board02> findByAllCategory(@Param("keyword") String keyword, Pageable pageable);
+
     @Query("select b from Board02 b where b.subject like %:keyword%")
     //*은 못쓰기 때문에 이름을 부여해서 사용해야 한다.
     //매개변수를 쓰려면 변수라는 이름으로 : 을 붙여야 한다.

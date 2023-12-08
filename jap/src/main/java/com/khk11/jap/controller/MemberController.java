@@ -60,7 +60,7 @@ public class MemberController {
 
     @PostMapping("/modify")
     public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
-        MemberDto memberInfo = memberService.modifyMember(memberDto);
+       memberService.modifyMember(memberDto);
         //model.addAttribute("memberInfo",memberInfo);
         return "redirect:/";
     }

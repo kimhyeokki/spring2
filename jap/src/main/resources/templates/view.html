@@ -17,7 +17,8 @@
             <h3 th:text="${board.subject}"></h3>
             <hr>
             <div class="mt-5 mb-5">
-                <div th:text="${board.content}"></div>
+
+                <div th:utext="${@commonMarkDownRender.markDownRender(board.content)}"></div>
                 <div >
                     <span th:text="${board.writer.nickName}"></span>
                     <span th:text="${#temporals.format(board.createDate,'YYYY-MM-dd')}"></span>

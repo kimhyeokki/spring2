@@ -77,7 +77,9 @@ public class BoardService {
         }else if (category.equals("writer")){
             Page<Board02> boardList = boardRepository.findByWriter(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확
             return boardList;
+        }else {
+            Page<Board02> boardList = boardRepository.findByAllCategory(keyword,pageable); //Optional을 반환하고 그래서 isPresent를 통해 있는지 확
+            return boardList;
         }
-        throw new RuntimeException("검색 결과가 없습니다.");
     }
 }

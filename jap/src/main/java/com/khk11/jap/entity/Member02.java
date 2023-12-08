@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  // protect 빈생성자를 private로 만들지마라
 @ToString
 @Entity
 @DynamicUpdate

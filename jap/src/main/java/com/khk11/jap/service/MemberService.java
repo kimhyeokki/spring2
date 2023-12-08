@@ -60,19 +60,22 @@ public class MemberService {
         return null;
         //throw new NotFoundMember("찾는 사람이 없습니다.");
     }
-    public MemberDto modifyMember(MemberDto memberDto) {
+    public void modifyMember(MemberDto memberDto) {
         Optional<Member02> member = memberRepository.findById(memberDto.getUserId());
         // jpa 에 id로 잡힌 컬럼의 이름이 같으면 update를 한다. 아니면 insert
         if(member.isPresent()) {
-            Member02 updateMember = Member02.builder()
+            Member02 updateMember = member.get();
+            updateMember.setAge(memberDto.getAge());
+            updateMember.setEmail(memberDto.getEmail());
+            updateMember.setNickName(memberDto.getNickName());
+            memberRepository.save(updateMember);
+            /*Member02 updateMember = Member02.builder()
                     .userId(member.get().getUserId())
                     .age(memberDto.getAge())
                     .email(memberDto.getEmail())
                     .nickName(memberDto.getNickName())
-                    .build();
-            memberRepository.save(updateMember);
+                    .build();*/
         }
-        return null;
     }
     public boolean deleteMember(String id){
         Optional<Member02> member = memberRepository.findById(id);

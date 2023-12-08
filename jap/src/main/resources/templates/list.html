@@ -28,8 +28,12 @@
         <th:block th:each="item, status:${boardList}">
             <tr>
                 <th scope="row" th:text="${pageNation.totalElements - pageNation.number*pageNation.size - status.index}">1</th>
-                <td ><a href="" th:href="@{/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></td>
+                <td ><a href="" th:href="@{/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a>
+                    <span class="small text-danger" th:text="${item.commentList.size()}"
+                          th:if="${item.commentList.size() > 0}">[3]</span>
+                </td>
                 <td ><span   th:text="${item.writer.nickName}">제목이 들어가겠죠....</span></td>
+
                 <td th:text="${#temporals.format(item.createDate,'YYYY-MM/dd')}"></td>
             </tr>
         </th:block>
