@@ -4,26 +4,24 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <div class="container" th:fragment="headerFragment">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <header class="d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
+
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img src="/images/alien.png" />
+            <img src="/images/logo.png" class="logo"/>
         </a>
         <div sec:authorize="!isAuthenticated()">
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/board/list02}" class="nav-link">board</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/member/join}" class="nav-link">join</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/member/list}" class="nav-link">login</a></li>
+                <li><a href="" class="fs-3"><i class="bi bi-instagram"></i></a></li>
+                <li class="mx-2"><a href="" class="fs-3 text-dark"><i class="bi bi-house-heart"></i></a></li>
+                <li class="mx-2"><a href="" class="fs-3 text-dark "><i class="bi bi-postage-heart-fill"></i></a></li>
+                <li class="mx-2"><a href="" class="fs-3 text-dark  mx-2"><i class="bi bi-person-fill-lock"></i></a></li>
             </ul>
         </div>
         <div sec:authorize="isAuthenticated()">
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/board/list02}" class="nav-link">board</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/member/mypage(id=${#authentication.principal.loggedMember.userId})}" class="nav-link"
-                 th:text="${#authentication.principal.loggedMember.nickName}"
-                >장성호</a></li>
-                <li class="nav-item"><a href="/board/list.html" th:href="@{/member/logout}" class="nav-link">logout</a></li>
+                <li><a href="" class="fs-3 text-dark mx-2"><i class="bi bi-house-heart"></i></a></li>
+                <li><a href="" class="fs-3 text-dark mx-2"><i class="bi bi-postage-heart-fill"></i></a></li>
+                <li><a href="" class="fs-3 text-dark mx-2"><i class="bi bi-person-fill-lock"></i></a></li>
             </ul>
         </div>
     </header>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h1>join</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="mt-5 mb-5">JOIN</h2>
+                <form action="" th:action="@{/member/join}" method="post" th:object="${joinDto}">
+                    <div class="mb-3">
+                        <label for="userId" class="form-label">userId</label>
+                        <input type="text" class="form-control" id="userId" placeholder="title" name="userId"
+                        th:field="*{userId}">
+                        <p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"  class="error">여기에 오류메세지 띄워주세요.</p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userId" class="form-label">password</label>
+                        <input type="password" class="form-control" id="password" placeholder="title" name="password"
+                               th:field="*{password}">
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">여기에 오류메세지 띄워주세요.</p>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">name</label>
+                        <input type="text" class="form-control" id="userName" placeholder="name" name="name"
+                               th:field="*{name}">
+                        <p  class="error">여기에 오류메세지 띄워주세요.</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">email</label>
+                        <input type="text" class="form-control" id="email" placeholder="email"
+                               name="email" th:field="*{email}">
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">여기에 오류메세지 띄워주세요.</p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-5">
+                        <button class="btn btn-primary" id="btnJoinConfirm">confirm</button>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-center mt-5">
+                    <a href="/auth/login" class="btn btn-primary" id="btnLogin">로그인</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+</html>
