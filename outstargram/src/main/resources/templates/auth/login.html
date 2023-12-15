@@ -5,40 +5,33 @@
 <div layout:fragment="content" class="main">
     <div class="container justify-content-center d-flex">
         <div class="col-4">
-        <h1>LOGIN</h1>
-        <form method="post" action="/member/login" th:action="@{/auth/login}" >
-            <div class="mb-3">
-                <label for="userId" class="form-label">userId</label>
-                <input type="text" class="form-control" placeholder="id" id="userId">
-                <p  class="error">여기에 오류메세지 띄워주세요.</p>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">password</label>
-                <input type="password" class="form-control" placeholder="password" id="password"
-                       >
-                <p  class="error">뭐지</p>
-            </div>
+            <h2>LOGIN</h2>
+            <form method="post" action="/auth/login" th:action="@{/auth/login}">
+                <div class="mb-3">
+                    <label for="userId" class="form-label">userId</label>
+                    <input type="text" class="form-control" placeholder="id" id="userId"
+                           name="userId">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">password</label>
+                    <input type="password" class="form-control" placeholder="password" id="password"
+                           name="password">
+                </div>
+                <div class="mt-5 d-grid">
+                    <button class="btn btn-primary" id="btnSubmit">LOGIN</button>
+                    <a class="btn btn-primary mt-2" href="/auth/join">JOIN</a>
+                    <a class="btn btn-primary mt-2" href="/mail/find_password">SEARCH PASSWORD</a>
 
-            <div class="mt-5">
-                <button class="btn btn-primary" id="btnSubmit">submit</button>
-                <a class="btn btn-primary" href="/mail/find_password">비밀번호 찾기</a>
-            </div>
-        </form>
-        <div class="mt-5">
-            <div>
-                <a class="btn btn-primary" href="/oauth2/authorization/google">구글 로그인</a>
-            </div>
-            <div>
-                <a class="btn btn-primary" href="/oauth2/authorization/naver">네이버 로그인</a>
-            </div>
-            <div>
-                <a class="btn btn-primary" href="/oauth2/authorization/kakao">카카오 로그인</a>
-            </div>
-            <div>
-                <a class="btn btn-primary" href="/oauth2/authorization/github">깃허브 로그인</a>
+                </div>
+            </form>
+            <hr>
+            <div class="mt-5 d-grid">
+                <a class="btn btn-outline-primary mt-1" href="/oauth2/authorization/google">GOOGLE</a>
+                <a class="btn btn-outline-primary mt-1" href="/oauth2/authorization/naver">NAVER</a>
+                <a class="btn btn-outline-primary mt-1" href="/oauth2/authorization/kakao">KAKAO</a>
+                <a class="btn btn-outline-primary mt-1" href="/oauth2/authorization/github">GTHUB</a>
             </div>
         </div>
-    </div>
     </div>
 </div>
 </html>

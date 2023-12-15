@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container justify-content-center d-flex">
+        <div class="col-12">
+            <h2>MY PAGE</h2>
+            <div class="mypage-header">
+                <div class="profile">
+                    <th:block th:if="${memberInfo.member.profileImageUrl==null}">
+                        <i class="bi bi-person-circle" style="font-size: 100px"></i>
+                    </th:block>
+                    <th:block th:unless="${memberInfo.member.profileImageUrl==null}">
+                        <img src="" th:src="@{|/upload/${memberInfo.member.profileImageUrl}|}" id="memberProfileImage">
+                    </th:block>
+                </div>
+                <form method="post" action="" enctype="multipart/form-data" id="profileImageForm" style="display: none">
+                    <input th:type="file" name="profileImageUrl" id="profileSelect">
+                </form>
+                <div class="info">
+                    <div class="btns">
+                        <th:block th:if="${memberInfo.pageOwner}">
+                            <a href="/image/upload" class="btn btn-primary">STORY</a>
+                        </th:block>
+                        <th:block th:unless="${memberInfo.pageOwner}">
+                            <button class="btn btn-outline-primary" id="btnSubscribe"
+                                    th:data-idx="${memberInfo.member.id}"
+                                    th:if="${memberInfo.subscribeState}" data-subscribe="cancel">구독취소
+                            </button>
+                            <button class="btn btn-outline-primary" id="btnSubscribe"
+                                    th:data-idx="${memberInfo.member.id}"
+                                    th:unless="${memberInfo.subscribeState}" data-subscribe="confirm">구독하기
+                            </button>
+                        </th:block>
+                        <button class="btn btn-outline-info"
+                                data-bs-toggle="modal"
+                                data-bs-target="#menuModal">SETTING
+                        </button>
+                    </div>
+                    <div class="subscribe mt-2">
+                        <button type="button" class="btn btn-primary position-relative" id="btnSubscribeInfo">
+                            구독자수
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            >
+                            <span th:text="${memberInfo.subscribeCount}" id="subscribeCount"></span>
+                            <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="title mt-3">
+                        <h3 th:text="${memberInfo.member.userId}">fjdsklf</h3>
+                        <div th:text="${memberInfo.member.description}">여기에 소개글</div>
+                    </div>
+                </div>
+                <div class="story-list">
+                    <ul>
+                        <th:block th:each="item : ${memberInfo.member.imageList}">
+                            <li>
+                                <img src="/images/500.png" th:src="@{|/upload/${item.imgUrl}|}">
+                            </li>
+                        </th:block>
+
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="menuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body d-grid">
+                    <a href="/auth/logout" class="btn btn-primary"> LOG OUT </a>
+                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.member.id})}"
+                       class="btn btn-outline-primary mt-2"> MODIFY </a>
+                    <button type="button" class="btn btn-outline-danger mt-2"
+                            data-bs-dismiss="modal">CLOSE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="subscribeInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">구독정보</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="subscribeList">
+                        <!--<li>
+                            <span><img src="/images/alien.png"></span>
+                            <span>장성호</span>
+                            <button class="btn btn-primary">구독하기</button>
+                        </li>
+                        <li>
+                            <span><img src="/images/alien.png"></span>
+                            <span>장성호</span>
+                            <button class="btn btn-primary">구독하기</button>
+                        </li>
+                        <li>
+                            <span><img src="/images/alien.png"></span>
+                            <span>장성호</span>
+                            <button class="btn btn-primary">구독하기</button>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script th:inline="javascript">
+        const subscribeInfoModal = new bootstrap.Modal("#subscribeInfoModal");
+        let subscribeCount = [[${memberInfo.subscribeCount}]];
+
+        const id = [[${memberInfo.member.id}]];
+        $(".profile").on("click", function () {
+            $("#profileSelect").trigger("click");
+        });
+        $("#profileSelect").on("change", function (e) {
+            const file = e.target.files[0];
+            if (!file.type.match("image.*")) {
+                alert("이미지 파일만 가능합니다.");
+                return false;
+            }
+            const profileImageForm = $("#profileImageForm")[0];
+            const formData = new FormData(profileImageForm);
+            $.ajax({
+                url: "/api/member/"+id+"/profileImageUrl",
+                data: formData,
+                contentType: false,  //  x-www-form-urlencoded로 되는거 막기
+                processData: false,  //  query string으로 파싱되는거 막기
+                //enctype:"multipart/form-data"
+                method: "PUT",
+                success: function (response) {
+                    console.log(response);
+                    const fileReader = new FileReader();
+                    console.log("fileReader===", fileReader);
+                    fileReader.onload = function () {
+                        console.log("파일 변경");
+                        $("#memberProfileImage").attr("src", "/upload/" + response.memberInfo.profileImageUrl);
+                    }
+                    fileReader.readAsDataURL(file);
+                    // 요거 써야지만 onload 이벤트 발생한다.
+                }
+            })
+            //  key:value
+
+        })
+
+        $("body").on("click", "#btnSubscribe", function () {
+            const subscribe = $(this).data("subscribe");
+            const _this = $(this);
+            const id = $(this).data("idx");
+            console.log("subscribe===", subscribe);
+            if (subscribe == "confirm") {
+                $.ajax({
+                    url: "/api/subscribe/" + id,
+                    method: "POST",
+                    success: function (response) {
+                        console.log(response);
+                        _this.data("subscribe", "cancel");
+                        _this.text("구독취소");
+                        subscribeCount++;
+                        $("#subscribeCount").text(subscribeCount);
+                    }
+                })
+                console.log("confirm");
+            } else {
+                $.ajax({
+                    url: "/api/subscribe/" + id,
+                    method: "DELETE",
+                    success: function (response) {
+                        console.log(response);
+                        _this.data("subscribe", "confirm");
+                        _this.text("구독하기");
+                        subscribeCount--;
+                        $("#subscribeCount").text(subscribeCount);
+                    }
+                });
+                console.log("cancel");
+            }
+        })
+
+        $("#btnSubscribeInfo").on("click",function(){
+            subscribeInfoModal.show();
+            $.ajax({
+                url:"/api/member/"+id+"/subscribe",
+                success:function(response){
+                    console.log(response);
+
+                    let tempHtml = "";
+                    if(response.subscribeList.length===0) {
+                        tempHtml="<p>구독하는 사람이 없습니다.</p>"
+                    } else {
+                        $.each(response.subscribeList,function(idx,item){
+                            const profileImageUrl = item.profileImageUrl;
+                            const name = item.name;
+                            const equalState = item.equalState;
+                            const subscribeState= item.subscribeState;
+                            let btn = "";
+                            if(equalState==="1") {
+                                btn = "";
+                            } else {
+                                if(subscribeState!=="1") {
+                                    btn = `<button class="btn btn-primary"  id="btnSubscribe" data-subscribe="confirm" data-idx="${item.id}">구독하기</button>`;
+                                } else {
+                                    btn = `<button class="btn btn-primary" id="btnSubscribe" data-subscribe="cancel"  data-idx="${item.id}">구독취소</button>`;
+                                }
+                            }
+                            tempHtml+=`<li>
+                            <span><img src="/upload/${profileImageUrl}"  class="thumb"></span>
+                            <span class="name">${name}</span>
+                            ${btn}
+                        </li>`
+                        });
+                    }
+                    $(".subscribeList").html(tempHtml);
+                }
+            })
+        });
+
+    </script>
+</div>
+</html>

@@ -14,16 +14,16 @@ import lombok.*;
 public class JoinDto {
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 4, max=20)
     private String userId;
 
     @NotBlank
-    @Size(min = 4,max = 20)
-    //@Pattern()  : 정규표현식 등
+    @Size(min = 4, max=20)
     private String password;
 
-    @Email
+    @Email(message = "이메일 형식이 맞질 않습니다.")
     private String email;
 
     private String name;
+
 }

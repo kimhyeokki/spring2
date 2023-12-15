@@ -1,7 +1,7 @@
 package com.khk11.outstargram.config;
 
 
-import com.khk11.outstargram.Service.OAuth2DetailsService;
+import com.khk11.outstargram.service.OAuth2DetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,31 +16,32 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(auth->auth
-                .requestMatchers("/","/auth/login","/css/**","/js/**","/images/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated())
-                .formLogin(form->form
-                        .loginPage("/auth/login")
+        httpSecurity.authorizeHttpRequests((auth)->auth
+                        .requestMatchers("/","/auth/join","/auth/login","/css/**","/js/**","/images/**")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .formLogin((form)->form
+                        .loginPage("/auth/login")   // get
                         .usernameParameter("userId")
                         .passwordParameter("password")
-                        .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/")
-                        .permitAll())
-                .logout(out->out
+                        .loginProcessingUrl("/auth/login")  //post
+                        .defaultSuccessUrl("/image/story",true)
+                        .permitAll()
+                )
+                .logout((form)->form
                         .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                        .logoutSuccessUrl("/auth/login")
-                        .invalidateHttpSession(true))
-                .oauth2Login(oauth2->oauth2
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                )
+                .oauth2Login((ouath2Login) -> ouath2Login
                         .loginPage("/auth/login")
                         .defaultSuccessUrl("/")
-                        .userInfoEndpoint(userInfo->userInfo
+                        .userInfoEndpoint((userInfo) -> userInfo
                                 .userService(oAuth2DetailsService)
                         )
                 )
-
-                .csrf(csrf->csrf.disable());
+                .csrf((csrf)->  csrf.disable());
 
         return httpSecurity.build();
     }
